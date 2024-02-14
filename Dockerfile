@@ -1,6 +1,8 @@
-# This selenium docker image already contains chromedriver and xvfb
-FROM selenium/standalone-chrome
-
+# Seleniarm docker image for ARM architectures
+# https://github.com/TESTARtool/TESTAR_dev/issues/374
+# This seleniarm docker image already contains chromedriver and xvfb
+FROM seleniarm/standalone-chromium
+USER root
 # Update image dependencies and java
 RUN sudo apt-get -o Acquire::Check-Valid-Until=false -o Acquire::Check-Date=false update
 RUN sudo apt-get install -y openjdk-17-jdk libxkbcommon-x11-0
@@ -17,5 +19,6 @@ COPY runImage /runImage
 COPY README.Docker /README.Docker
 RUN sudo chmod 777 /runImage
 RUN sudo chmod -R 777 /testar
+RUN mkdir output
 
 CMD [ "sh", "/runImage"]
